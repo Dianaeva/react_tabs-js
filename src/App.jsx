@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import 'bulma/css/bulma.css';
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -12,18 +12,26 @@ export const tabs = [
   { id: 'tab-3', title: 'Tab 3', content: 'Some text 3' },
 ];
 
-const DEFAULT_TAB = tabs[0];
+const tabsIdMap = {};
+
+tabs.forEach(tab => {
+  tabsIdMap[tab.id] = tab;
+});
+
+const DEFAULT_TAB_ID = tabs[0].id;
 
 export const App = () => {
-  const [activeTab, setActiveTab] = useState(DEFAULT_TAB);
+  const [activeTabId, setActiveTabId] = useState(DEFAULT_TAB_ID);
+
+  const activeTab = useMemo(() => {
+    return tabsIdMap[activeTabId] ?? tabsIdMap[DEFAULT_TAB_ID] ?? tabs[0];
+  }, [activeTabId]);
 
   const onTabSelected = tabId => {
-    const selectedTab = tabs.find(tab => tab.id === tabId);
-
-    if (selectedTab) {
-      setActiveTab(selectedTab);
+    if (tabId) {
+      setActiveTabId(tabId);
     } else {
-      setActiveTab(DEFAULT_TAB);
+      setActiveTabId(DEFAULT_TAB_ID);
     }
   };
 

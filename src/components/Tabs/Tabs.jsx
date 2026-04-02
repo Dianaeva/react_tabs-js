@@ -1,6 +1,10 @@
 import cn from 'classnames';
 
 export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
+  if (!tabs.length) {
+    throw new Error('Tabs component requires at least one tab');
+  }
+
   const activeTab = tabs.find(tab => tab.id === activeTabId) ?? tabs[0];
   const activeTabID = activeTab.id;
 
