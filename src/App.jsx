@@ -12,19 +12,16 @@ export const tabs = [
   { id: 'tab-3', title: 'Tab 3', content: 'Some text 3' },
 ];
 
-const tabsIdMap = {};
-
-tabs.forEach(tab => {
-  tabsIdMap[tab.id] = tab;
-});
-
-const DEFAULT_TAB_ID = tabs[0].id;
+const DEFAULT_TAB = tabs[0];
+const DEFAULT_TAB_ID = DEFAULT_TAB.id;
 
 export const App = () => {
   const [activeTabId, setActiveTabId] = useState(DEFAULT_TAB_ID);
 
   const activeTab = useMemo(() => {
-    return tabsIdMap[activeTabId] ?? tabsIdMap[DEFAULT_TAB_ID] ?? tabs[0];
+    const currentActiveTab = tabs.find(tab => tab.id === activeTabId);
+
+    return currentActiveTab ?? DEFAULT_TAB ?? tabs[0];
   }, [activeTabId]);
 
   const onTabSelected = tabId => {
