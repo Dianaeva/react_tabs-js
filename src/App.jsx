@@ -36,11 +36,13 @@ export const App = () => {
     <div className="section">
       <h1 className="title">Selected tab is {activeTab.title}</h1>
 
-      <Tabs
-        tabs={tabs}
-        activeTabId={activeTab.id}
-        onTabSelected={onTabSelected}
-      />
+      {tabs.length !== 0 && (
+        <Tabs
+          tabs={tabs}
+          activeTabId={activeTab.id}
+          onTabSelected={onTabSelected}
+        />
+      )}
     </div>
   );
 };
